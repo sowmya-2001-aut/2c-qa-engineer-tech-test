@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 
 export class BasePage {
   constructor(protected page: Page) {}
@@ -12,6 +12,20 @@ export class BasePage {
   /** Action fetch content */
   async getPageContent(): Promise<string> {
     return this.page.content();
+  }
+
+  /** Action click element */
+  async clickElement(locator: Locator) {
+    await locator.click();
+  }
+
+  /** Action fill element */
+  async fillElement(locator: Locator, text: string) {
+    await locator.fill(text);
+  }
+
+  async setViewport(width: number, height: number) {
+      await this.page.setViewportSize({ width, height });
   }
 
 }

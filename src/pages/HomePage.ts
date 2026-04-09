@@ -2,6 +2,7 @@ import { BasePage } from "./BasePage";
 import { Page, Locator, expect } from "@playwright/test";
 
 export class HomePage extends BasePage {
+  
   readonly url = '/';
 
   // Locators
@@ -37,13 +38,13 @@ export class HomePage extends BasePage {
   }
   /** Action click book */
   async clickFirstBook() {
-    await this.bookLinks.first().click();
+    await this.clickElement(this.bookLinks.first());
     await this.page.waitForLoadState('networkidle');
   }
 
   /** Action click add */
   async clickAddBook() {
-    await this.addBookLink.first().click();
+    await this.clickElement(this.addBookLink.first());
     await this.page.waitForLoadState('networkidle');
   }
 
@@ -58,4 +59,5 @@ export class HomePage extends BasePage {
     const content = await this.getPageContent();
     return content.includes(text);
   }
+  
 }
