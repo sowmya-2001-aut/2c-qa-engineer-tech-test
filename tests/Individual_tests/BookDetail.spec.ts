@@ -8,6 +8,7 @@ test.describe('Book Detail Page', () => {
   test.beforeEach(async ({ page }) => {
     bookDetailPage = new BookDetailPage(page);
     await bookDetailPage.goto(VALID_BOOK_ID);
+    await expect(bookDetailPage.loadingIndicator).toBeHidden();
   });
 
   test('should navigate to the correct book detail URL', async ({ page }) => {
@@ -15,7 +16,7 @@ test.describe('Book Detail Page', () => {
   });
 
   test('should display a non-empty book title as heading', async () => {
-    expect(await bookDetailPage.isHeadingVisible()).toBeTruthy();
+    await expect(bookDetailPage.heading).toBeVisible();
     const text = await bookDetailPage.getHeadingText();
     expect(text.length).toBeGreaterThan(0);
   });

@@ -65,7 +65,8 @@ test.describe('Add Book Form', () => {
         await page.waitForURL(/\/book\/\d+/); // awaits automatic redirect
         const homePage = new HomePage(page);
         await homePage.goto();
-        expect(await addBookPage.getBookTitleContents(uniqueTitle)).toBe(true);
+        const cleanContents = await addBookPage.getBookTitleContents(uniqueTitle);
+        expect(cleanContents).toContain(uniqueTitle);
     });
 
     // ── Edge cases ─────────────────────────────────────────────────────────

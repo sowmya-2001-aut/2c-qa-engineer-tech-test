@@ -10,7 +10,8 @@ test.describe('Responsive Design', () => {
       const homePage = new HomePage(page);
       await homePage.setViewport(viewport.width, viewport.height);
       await homePage.goto();
-      expect(await homePage.isHeadingVisible()).toBe(true);
+      await expect(homePage.loadingIndicator).toBeHidden();
+      await expect(homePage.heading).toBeVisible();
       expect(await homePage.getBookCount()).toBeGreaterThan(0);
     });
 
