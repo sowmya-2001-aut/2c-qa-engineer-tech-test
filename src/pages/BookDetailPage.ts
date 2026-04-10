@@ -5,9 +5,10 @@ export class BookDetailPage extends BasePage {
   // Locators
   readonly heading: Locator = this.page.locator('h1, h2').first();
   readonly subHeading: Locator = this.page.locator('h3');
-  readonly backLink: Locator = this.page.locator('a.text-blue-600');
+  readonly backLink: Locator = this.page.getByRole('link', { name: /Back to Library/i }).first();
   readonly backButton: Locator = this.page.getByRole('link', { name: 'Back to Library', exact: true });
   readonly authorText: Locator = this.page.locator('.text-xl.text-gray-600');
+  readonly loadingIndicator: Locator = this.page.getByText('Loading book details...');
   constructor(page: Page) {
     super(page);
   }

@@ -37,8 +37,6 @@ export class AddBookPage extends BasePage {
     constructor(page: Page) {
         super(page);
     }
-    // Required fields
-
 
     // ── Navigation 
 
@@ -88,8 +86,6 @@ export class AddBookPage extends BasePage {
         await this.fillForm(data);
         await this.submit();
     }
-
-
 
     // ── State helpers ──────────────────────────────────────────────────────────
 

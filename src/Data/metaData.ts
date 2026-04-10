@@ -1,7 +1,7 @@
 import { generateRandomName } from '../util/helperUtil';
 
 // --- BookDetail MetaData ---
-export const VALID_BOOK_ID = 12;
+export const VALID_BOOK_ID = 1;
 export const UNKNOWN_BOOK_ID_NUM = 99999;
 export const UNKNOWN_BOOK_ID_STR = 'abc';
 
