@@ -1,4 +1,4 @@
-import { Page, Locator } from '@playwright/test';
+import { Page, Locator,expect } from '@playwright/test';
 
 export class BasePage {
   constructor(protected page: Page) {}
@@ -16,11 +16,13 @@ export class BasePage {
 
   /** Action click element */
   async clickElement(locator: Locator) {
+    //expect(locator).toBeVisible();
     await locator.click();
   }
 
   /** Action fill element */
   async fillElement(locator: Locator, text: string) {
+    expect(locator).toBeVisible();
     await locator.fill(text);
   }
 

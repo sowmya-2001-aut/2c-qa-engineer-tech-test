@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 import { AddBookPage } from '../../src/pages/AddBookPage';
 import { HomePage } from '../../src/pages/HomePage';
-import { generateRandomName } from '@/util/helperUtil';
+import { MISSING_TITLE_INPUT, MISSING_AUTHOR_INPUT, LONG_TITLE_INPUT, SPECIAL_CHARS_INPUT, getMinimalBookInput, getFullBookInput } from '../../src/Data/metaData';
 
 test.describe('Add Book Form', () => {
     let addBookPage: AddBookPage;
@@ -33,42 +33,29 @@ test.describe('Add Book Form', () => {
     });
 
     test('should not submit when title is missing', async () => {
-        await addBookPage.fillAndSubmit({ author: 'Test Author' });
+        await addBookPage.fillAndSubmit(MISSING_TITLE_INPUT);
         expect(await addBookPage.isOnAddBookPage()).toBe(true);
     });
 
     test('should not submit when author is missing', async () => {
-        await addBookPage.fillAndSubmit({ title: 'Test Title' });
+        await addBookPage.fillAndSubmit(MISSING_AUTHOR_INPUT);
         expect(await addBookPage.isOnAddBookPage()).toBe(true);
     });
 
     // ── Happy path ─────────────────────────────────────────────────────────
 
     test('should successfully add a book with required fields only', async () => {
-        const title = generateRandomName('Minimal Book');
-        await addBookPage.fillAndSubmit({
-            title: title,
-            author: generateRandomName('Minimal Author'),
-            pages: '100'
-        });
+        const input = getMinimalBookInput();
+        await addBookPage.fillAndSubmit(input);
         expect(await addBookPage.bookAdded.isVisible());
-        expect(await addBookPage.isSubmissionSuccessful(title));
+        expect(await addBookPage.isSubmissionSuccessful(input.title));
     });
 
     test('should successfully add a book with all fields filled', async () => {
-        const title = generateRandomName('Success Book');
-        await addBookPage.fillAndSubmit({
-            title: title,
-            author: generateRandomName('Author'),
-            genre: 'Fiction',
-            publishedYear: '2024',
-            description: 'A full book entry created during testing.',
-            isbn: '978-1234567890',
-            pages: '320',
-            rating: '4.5',
-        });
+        const input = getFullBookInput();
+        await addBookPage.fillAndSubmit(input);
         expect(await addBookPage.bookAdded.isVisible());
-        expect(await addBookPage.isSubmissionSuccessful(title));
+        expect(await addBookPage.isSubmissionSuccessful(input.title));
     });
 
     test('newly added book should appear on the home page', async ({ page }) => {
@@ -84,18 +71,13 @@ test.describe('Add Book Form', () => {
     // ── Edge cases ─────────────────────────────────────────────────────────
 
     test('should handle very long title input without crashing', async () => {
-        const longTitle = 'A'.repeat(500);
-        await addBookPage.fillForm({ title: longTitle });
+        await addBookPage.fillForm(LONG_TITLE_INPUT);
         const value = await addBookPage.getTitleValue();
         expect(value.length).toBeGreaterThan(0);
     });
 
     test('should handle special characters in title and author', async () => {
-        await addBookPage.fillAndSubmit({
-            title: "Special <Chars> & \"Quotes\"",
-            author: "O'Brien & Co.",
-            pages: '100'
-        });
+        await addBookPage.fillAndSubmit(SPECIAL_CHARS_INPUT);
         expect(await addBookPage.bookAdded.isVisible());
     });
 });

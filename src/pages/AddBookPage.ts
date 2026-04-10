@@ -119,7 +119,6 @@ export class AddBookPage extends BasePage {
         expect(this.bookTitleH2.first()).toBeVisible();
         const contents = await this.bookTitleH2.allTextContents();
         const cleanContents = contents.map(text => text.trim());
-        console.log(cleanContents);
         return cleanContents.includes(expectTitle);
     }
 }

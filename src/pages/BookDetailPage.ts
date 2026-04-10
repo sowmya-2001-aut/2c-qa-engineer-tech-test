@@ -39,7 +39,6 @@ export class BookDetailPage extends BasePage {
   async hasAuthorInfo(): Promise<boolean> {
     await expect(this.authorText).toBeVisible();
     const authorName = await this.authorText.textContent();
-    console.log(authorName);
     if (!authorName) return false;
     const cleanAuthorName = authorName.replace(/^by\s+/i, '').trim();
     return cleanAuthorName.length >=1;
@@ -49,7 +48,6 @@ export class BookDetailPage extends BasePage {
   async hasDescriptionInfo(): Promise<boolean> {
     await expect(this.subHeading.first()).toBeVisible();
     const content = await this.subHeading.allInnerTexts();
-    //console.log(content);
     return (
       content.includes('Description') 
     );

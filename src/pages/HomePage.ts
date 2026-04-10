@@ -11,6 +11,7 @@ export class HomePage extends BasePage {
   readonly bookLinks: Locator = this.page.locator('a[href*="/book/"]');
   readonly addBookLink: Locator = this.page.getByRole('link', { name: /add book/i }).or(this.page.locator('a[href*="add-book"]'));
   readonly addBookTitle: Locator = this.page.getByRole('heading', { name: 'Add New Book' });
+  readonly loadingIndicator: Locator = this.page.getByText('Loading books...');
 
   constructor(page: Page) {
     super(page);

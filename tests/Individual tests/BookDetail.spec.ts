@@ -1,12 +1,13 @@
 import { test, expect } from '@playwright/test';
 import { BookDetailPage } from '../../src/pages/BookDetailPage';
+import { VALID_BOOK_ID, UNKNOWN_BOOK_ID_NUM, UNKNOWN_BOOK_ID_STR } from '../../src/Data/metaData';
 
 test.describe('Book Detail Page', () => {
   let bookDetailPage: BookDetailPage;
 
   test.beforeEach(async ({ page }) => {
     bookDetailPage = new BookDetailPage(page);
-    await bookDetailPage.goto(12);
+    await bookDetailPage.goto(VALID_BOOK_ID);
   });
 
   test('should navigate to the correct book detail URL', async ({ page }) => {
@@ -36,12 +37,12 @@ test.describe('Book Detail Page', () => {
   });
 
   test('should show a not-found page for a non-existent book ID', async () => {
-    await bookDetailPage.goto(99999);
+    await bookDetailPage.goto(UNKNOWN_BOOK_ID_NUM);
     expect(await bookDetailPage.isNotFoundPage()).toBeTruthy();
   });
 
   test('should handle an invalid (non-numeric) book ID gracefully', async () => {
-    await bookDetailPage.goto('abc');
+    await bookDetailPage.goto(UNKNOWN_BOOK_ID_STR);
     expect(await bookDetailPage.isNotFoundPage()).toBeTruthy();
   });
 });
