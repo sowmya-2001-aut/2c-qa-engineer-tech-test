@@ -24,7 +24,6 @@ export class HomePage extends BasePage {
 
   /** Validation count books */
   async getBookCount(): Promise<number> {
-    // Wait for the rendering skeleton to clear before counting elements!
     await expect(this.bookLinks.first()).toBeVisible();
     return this.bookLinks.count();
   }

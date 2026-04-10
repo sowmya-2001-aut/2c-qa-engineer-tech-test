@@ -112,7 +112,7 @@ export class AddBookPage extends BasePage {
     /** Validation title exists */
     async getBookTitleContents(expectTitle:string): Promise<string[]> {
        
-        expect(this.bookTitleH2.first()).toBeVisible();
+        await this.bookTitleH2.first().waitFor({ state: 'visible', timeout: 15000 });
         const contents = await this.bookTitleH2.allTextContents();
         const cleanContents = contents.map(text => text.trim());
         return cleanContents;
